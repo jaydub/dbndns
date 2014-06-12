@@ -1,0 +1,4 @@
+#!/bin/sh
+exec envdir ./env sh -c '
+  exec setuidgid dnslog multilog t s"$LOGSIZE" n"$LOGNUM" "$FLAGS" "$LOGROOT"
+'

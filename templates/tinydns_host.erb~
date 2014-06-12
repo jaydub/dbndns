@@ -1,0 +1,8 @@
+=<%= @fqdn_act %>:<%= @ip %>:<%= @ttl %>:<%= @tai64 %>:<%= @loc %>
+<% @fqdn_aliases.each do |val| -%>
+<% if scope.function_is_domain_name([val]) -%>
++<%= val %>:<%= @ip %>:<%= @ttl %>:<%= @tai64 %>:<%= @loc %>
+<% else -%> 
+<% scope.function_fail('all aliases must be domain names') -%>
+<% end -%>
+<% end -%>

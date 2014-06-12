@@ -1,0 +1,18 @@
+#!/bin/sh
+
+ROOTS=dnsroots.global
+
+if [ "$ROOT" != "" ] && [ -e $ROOT ] ; then
+    dnsip `dnsqr ns . | awk '/answer:/ { print $5 ; }' | sort` > /tmp/${ROOTS}
+    if  `grep -q '[\d+\.\d+\.\d+\.\d+]' /tmp/${ROOTS} `; then
+        cat /tmp/${ROOTS} > /etc/${ROOTS}
+        rm /tmp/${ROOTS}
+    else 
+        echo "The root server generation output appears broken."
+        echo "Check /tmp/${ROOTS} for the fetched output."
+        echo "Old list remains untouched."
+        exit 1
+    fi
+else
+    echo "Usage: set-root-servers"
+fi
