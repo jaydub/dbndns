@@ -1,0 +1,11 @@
+{
+    "name": "jaydub-dbndns",
+    "version": "0.1.0",
+    "author": "John Morton",
+    "license": "Apache-2.0",
+    "summary": "Installation, configuration and removal of the Debian variant of djbdns",
+    "source": "https://github.com/jaydub/dbndns",
+    "project_url": "https://github.com/jaydub/dbndns",
+    "issues_url": "https://github.com/jaydub/dbndns/issues",
+    "dependencies": []
+}
