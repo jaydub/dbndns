@@ -254,18 +254,18 @@ class dbndns::dnscache (
     ### Logging env configuration
     file { "${base_path}/log/env/LOGSIZE":
       ensure  => file,
-      content => $log_size,
+      content => "$log_size",
       notify  => Exec['restart_dnscache_multilog'],
     }
     # Can't use a bare variable due to PUP-1768
     file { "${base_path}/log/env/LOGNUM":
       ensure  => file,
-      content => $log_num,
+      content => "$log_num",
       notify  => Exec['restart_dnscache_multilog'],
     }
     file { "${base_path}/log/env/FLAGS":
       ensure  => file,
-      content => $log_flags,
+      content => "$log_flags",
       notify  => Exec['restart_dnscache_multilog'],
     }
     file { "${base_path}/log/env/LOGROOT":
