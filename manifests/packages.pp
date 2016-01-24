@@ -6,8 +6,8 @@
 class dbndns::packages ($purge=false) {
   if $purge {
     service{'svscan':
-      ensure  => stopped,
-      before  => Package['daemontools-run'],
+      ensure => stopped,
+      before => Package['daemontools-run'],
     }
     package{'dbndns':
       ensure => purged,

@@ -42,8 +42,8 @@ define dbndns::cache_server (
     }
     else {
       file { "${dbndns::dnscache::base_path}/root/servers/${domain}":
-        ensure  => absent,
-        notify  => Service[$dbndns::dnscache::service_name],
+        ensure => absent,
+        notify => Service[$dbndns::dnscache::service_name],
       }
     }
   }

@@ -7,10 +7,10 @@
 # start/end times
 
 define dbndns::tinydns_host (
+  $ip,
   $fqdn               = '',    # derived from the resource title if absent
   $ensure             = 'present', # or 'absent'
   $fqdn_aliases       = [],
-  $ip,
   $timestamp_to_start = '',
   $timestamp_to_end   = '',
   $loc                = '',
@@ -24,9 +24,9 @@ define dbndns::tinydns_host (
   if $purge or $ensure == 'absent'{
     if $purge == false {
       concat::fragment { "${title}_host_entry":
-        ensure  => absent,
-        target  => 'dnsdata',
-        notify  => Exec['data.cbd'],
+        ensure => absent,
+        target => 'dnsdata',
+        notify => Exec['data.cbd'],
       }
     }
   }

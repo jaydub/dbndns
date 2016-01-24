@@ -52,9 +52,9 @@ class dbndns::tinydns (
     } -> # and then...
     exec { 'stop_supervise':
       # Use -x to cause supervise to exit once tinydns and multilog exit
-      provider    => shell,
-      cwd         => '/',
-      command     => "svc -x -t  ${base_path}/log ${base_path}",
+      provider => shell,
+      cwd      => '/',
+      command  => "svc -x -t  ${base_path}/log ${base_path}",
     } -> # and then...
     file { $base_path:
       ensure  => 'absent',
@@ -157,34 +157,34 @@ class dbndns::tinydns (
     ### Env configuration
     file { "${base_path}/env/IP":
       ensure  => file,
-      content => $ip,
+      content => "${ip}\n",
       notify  => Service[$service_name],
     }
     file { "${base_path}/env/ROOT":
       ensure  => file,
-      content => "${base_path}/root",
+      content => "${base_path}/root\n",
       notify  => Service[$service_name],
     }
     ### Logging env configuration
     file { "${base_path}/log/env/LOGSIZE":
       ensure  => file,
-      content => $log_size,
+      content => "${log_size}\n",
       notify  => Exec['restart_tinydns_multilog'],
     }
     # Can't use a bare variable due to PUP-1768
     file { "${base_path}/log/env/LOGNUM":
       ensure  => file,
-      content => $log_num,
+      content => "${log_num}\n",
       notify  => Exec['restart_tinydns_multilog'],
     }
     file { "${base_path}/log/env/FLAGS":
       ensure  => file,
-      content => $log_flags,
+      content => "${log_flags}\n",
       notify  => Exec['restart_tinydns_multilog'],
     }
     file { "${base_path}/log/env/LOGROOT":
       ensure  => file,
-      content => '/var/log/dbndns/tinydns',
+      content => "/var/log/dbndns/tinydns\n",
       notify  => Exec['restart_tinydns_multilog'],
     }
     # Artificial restart for multilog, as it's usually automatically

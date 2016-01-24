@@ -52,9 +52,9 @@ define dbndns::tinydns_entry (
   if $purge or $ensure == 'absent'{
     if $purge == false {
       concat::fragment { "${title}_dns_entry":
-        ensure  => absent,
-        target  => 'dnsdata',
-        notify  => Exec['data.cbd'],
+        ensure => absent,
+        target => 'dnsdata',
+        notify => Exec['data.cbd'],
       }
     }
   }

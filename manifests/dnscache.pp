@@ -97,9 +97,9 @@ class dbndns::dnscache (
     } -> # and then...
     exec { 'stop_supervise':
       # Use -x to cause supervise to exit once dnscache and multilog exit
-      provider    => shell,
-      cwd         => '/',
-      command     => "svc -x -t  ${base_path}/log ${base_path}",
+      provider => shell,
+      cwd      => '/',
+      command  => "svc -x -t  ${base_path}/log ${base_path}",
     } -> # and then...
     file { $base_path:
       ensure  => 'absent',
@@ -213,64 +213,63 @@ class dbndns::dnscache (
     ### Env configuration
     file { "${base_path}/env/CACHESIZE":
       ensure  => file,
-      content => $cachesize,
+      content => "${cachesize}\n",
       notify  => Service[$service_name],
     }
     # Can't use a bare variable due to PUP-1768
     file { "${base_path}/env/DATALIMIT":
       ensure  => file,
-      content => "${derived_datalimit}",
+      content => "${derived_datalimit}\n",
       notify  => Service[$service_name],
     }
     file { "${base_path}/env/IP":
       ensure  => file,
-      content => $ip,
+      content => "${ip}\n",
       notify  => Service[$service_name],
     }
-    # Can't use a bare variable due to PUP-1768
     file { "${base_path}/env/IPSEND":
       ensure  => file,
-      content => "${derived_ipsend}",
+      content => "${derived_ipsend}\n",
       notify  => Service[$service_name],
     }
     file { "${base_path}/env/ROOT":
       ensure  => file,
-      content => "${base_path}/root",
+      content => "${base_path}/root\n",
       notify  => Service[$service_name],
     }
     if $hidettl {
       file { "${base_path}/env/HIDETTL":
         ensure  => file,
-        content => $hidettl,
+        content => "${hidettl}\n",
         notify  => Service[$service_name],
       }
     }
     else {
       file { "${base_path}/env/HIDETTL":
-        ensure  => absent,
-        notify  => Service[$service_name],
+        ensure => absent,
+        notify => Service[$service_name],
       }
     }
     ### Logging env configuration
     file { "${base_path}/log/env/LOGSIZE":
       ensure  => file,
-      content => "$log_size",
+      content => "${log_size}\n",
       notify  => Exec['restart_dnscache_multilog'],
     }
     # Can't use a bare variable due to PUP-1768
     file { "${base_path}/log/env/LOGNUM":
       ensure  => file,
-      content => "$log_num",
+      content => "${log_num}\n",
       notify  => Exec['restart_dnscache_multilog'],
     }
     file { "${base_path}/log/env/FLAGS":
       ensure  => file,
-      content => "$log_flags",
+      content => "${log_flags}\n",
       notify  => Exec['restart_dnscache_multilog'],
     }
     file { "${base_path}/log/env/LOGROOT":
       ensure  => file,
-      content => '/var/log/dbndns/dnscache',
+      content => '/var/log/dbndns/dnscache\n',
       notify  => Exec['restart_dnscache_multilog'],
     }
     # Artificial restart for multilog, as it's usually automatically
@@ -289,7 +288,7 @@ class dbndns::dnscache (
     if $forwardonly {
       file { "${base_path}/env/FORWARDONLY":
         ensure  => file,
-        content => '1',
+        content => "1\n",
       } -> # and then...
       file { "${base_path}/root/servers/@":
         ensure  => file,
@@ -303,9 +302,9 @@ class dbndns::dnscache (
         ensure => absent,
       } ~> # and then bootstrap using /etc/dnsroots.global
       file { "${base_path}/root/servers/@":
-        ensure  => file,
-        source  => $dbndns::params::dnsroots_path,
-        notify  => Service[$service_name],
+        ensure => file,
+        source => $dbndns::params::dnsroots_path,
+        notify => Service[$service_name],
       }
     }
     ### Service control
@@ -325,13 +324,13 @@ class dbndns::dnscache (
     }
     ### Root server list generator
     file { '/usr/bin/set-root-servers':
-      ensure  => file,
-      mode    => '0755',
-      source  => 'puppet:///modules/dbndns/set-root-servers',
+      ensure => file,
+      mode   => '0755',
+      source => 'puppet:///modules/dbndns/set-root-servers',
     }
     cron { 'cron_root_server_reset':
-      command     => '/usr/bin/set-root-servers',
-      month       => [5, 11],
+      command => '/usr/bin/set-root-servers',
+      month   => [5, 11],
     }
   }
 }
