@@ -213,34 +213,34 @@ class dbndns::dnscache (
     ### Env configuration
     file { "${base_path}/env/CACHESIZE":
       ensure  => file,
-      content => "${cachesize}\n",
+      content => "${cachesize}",
       notify  => Service[$service_name],
     }
     # Can't use a bare variable due to PUP-1768
     file { "${base_path}/env/DATALIMIT":
       ensure  => file,
-      content => "${derived_datalimit}\n",
+      content => "${derived_datalimit}",
       notify  => Service[$service_name],
     }
     file { "${base_path}/env/IP":
       ensure  => file,
-      content => "${ip}\n",
+      content => "${ip}",
       notify  => Service[$service_name],
     }
     file { "${base_path}/env/IPSEND":
       ensure  => file,
-      content => "${derived_ipsend}\n",
+      content => "${derived_ipsend}",
       notify  => Service[$service_name],
     }
     file { "${base_path}/env/ROOT":
       ensure  => file,
-      content => "${base_path}/root\n",
+      content => "${base_path}/root",
       notify  => Service[$service_name],
     }
     if $hidettl {
       file { "${base_path}/env/HIDETTL":
         ensure  => file,
-        content => "${hidettl}\n",
+        content => "${hidettl}",
         notify  => Service[$service_name],
       }
     }
@@ -253,23 +253,23 @@ class dbndns::dnscache (
     ### Logging env configuration
     file { "${base_path}/log/env/LOGSIZE":
       ensure  => file,
-      content => "${log_size}\n",
+      content => "${log_size}",
       notify  => Exec['restart_dnscache_multilog'],
     }
     # Can't use a bare variable due to PUP-1768
     file { "${base_path}/log/env/LOGNUM":
       ensure  => file,
-      content => "${log_num}\n",
+      content => "${log_num}",
       notify  => Exec['restart_dnscache_multilog'],
     }
     file { "${base_path}/log/env/FLAGS":
       ensure  => file,
-      content => "${log_flags}\n",
+      content => "${log_flags}",
       notify  => Exec['restart_dnscache_multilog'],
     }
     file { "${base_path}/log/env/LOGROOT":
       ensure  => file,
-      content => '/var/log/dbndns/dnscache\n',
+      content => '/var/log/dbndns/dnscache',
       notify  => Exec['restart_dnscache_multilog'],
     }
     # Artificial restart for multilog, as it's usually automatically
@@ -288,7 +288,7 @@ class dbndns::dnscache (
     if $forwardonly {
       file { "${base_path}/env/FORWARDONLY":
         ensure  => file,
-        content => "1\n",
+        content => "1",
       } -> # and then...
       file { "${base_path}/root/servers/@":
         ensure  => file,

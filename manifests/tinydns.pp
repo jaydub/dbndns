@@ -157,7 +157,7 @@ class dbndns::tinydns (
     ### Env configuration
     file { "${base_path}/env/IP":
       ensure  => file,
-      content => "${ip}\n",
+      content => "${ip}", # needs quotes to ensure type conversion works
       notify  => Service[$service_name],
     }
     file { "${base_path}/env/ROOT":
@@ -168,18 +168,18 @@ class dbndns::tinydns (
     ### Logging env configuration
     file { "${base_path}/log/env/LOGSIZE":
       ensure  => file,
-      content => "${log_size}\n",
+      content => "${log_size}",
       notify  => Exec['restart_tinydns_multilog'],
     }
     # Can't use a bare variable due to PUP-1768
     file { "${base_path}/log/env/LOGNUM":
       ensure  => file,
-      content => "${log_num}\n",
+      content => "${log_num}",
       notify  => Exec['restart_tinydns_multilog'],
     }
     file { "${base_path}/log/env/FLAGS":
       ensure  => file,
-      content => "${log_flags}\n",
+      content => "${log_flags}",
       notify  => Exec['restart_tinydns_multilog'],
     }
     file { "${base_path}/log/env/LOGROOT":
